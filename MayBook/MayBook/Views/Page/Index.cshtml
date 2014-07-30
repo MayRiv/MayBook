@@ -1,0 +1,31 @@
+﻿@model MayBook.Models.Profile
+
+@{
+    ViewBag.Title = "Index";
+}
+<div id="page">
+    <div> </div>
+    <div id="feed">
+        <div id="message">
+            <input id="message-text" type="text" placeholder="Write a message" />
+            <input type="button" value="Send" onclick="MayBook.SendMessage()"/>
+        </div>
+        @foreach(var post in Model.Posts)
+        {
+            <div id="@post.PostId" class="post">
+            <a href="/Page/Index/@post.Users1.UserId">@post.Users1.Name</a><br />
+            @post.CreationDate.ToLongTimeString()
+            @if(User.Identity.Name == post.SenderId.ToString())
+            {
+                <input type="button" value="Change" />
+                <input type="button" value="Delete" />
+            }
+            <p>@post.Body</p>
+            </div>   
+        }
+    </div>
+    <div id="account-info">
+        <h2>@Model.User.Name</h2>
+        <p>@Model.User.RegisterDate.ToLongDateString()</p>
+    </div>
+</div>

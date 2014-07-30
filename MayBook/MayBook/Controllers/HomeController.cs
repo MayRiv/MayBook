@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using System.Web.Security;
 namespace MayBook.Controllers
 {
     public class HomeController : Controller
@@ -13,11 +13,15 @@ namespace MayBook.Controllers
 
         public ActionResult Index()
         {
-            MayBookDataContext context = new MayBookDataContext();
-            var users = context.Users;
-            foreach (var user in users)
-                ViewBag.Name = user.Name;
-            return View();
+            if (Request.IsAuthenticated)
+            {
+                int id = int.Parse(User.Identity.Name);
+                return RedirectToAction("Index", "Page", new { id = id });
+            }
+            else
+            {
+                return RedirectToAction("LogOn", "Account");
+            }
         }
 
     }

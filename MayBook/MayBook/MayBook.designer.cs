@@ -109,6 +109,8 @@ namespace MayBook
 		
 		private EntitySet<Posts> _Posts;
 		
+		private EntitySet<Posts> _Posts1;
+		
     #region Определения метода расширяемости
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -134,6 +136,7 @@ namespace MayBook
 		public User()
 		{
 			this._Posts = new EntitySet<Posts>(new Action<Posts>(this.attach_Posts), new Action<Posts>(this.detach_Posts));
+			this._Posts1 = new EntitySet<Posts>(new Action<Posts>(this.attach_Posts1), new Action<Posts>(this.detach_Posts1));
 			OnCreated();
 		}
 		
@@ -297,7 +300,7 @@ namespace MayBook
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Posts", Storage="_Posts", ThisKey="UserId", OtherKey="UserId")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Posts", Storage="_Posts", ThisKey="UserId", OtherKey="ReceiverId")]
 		public EntitySet<Posts> Posts
 		{
 			get
@@ -307,6 +310,19 @@ namespace MayBook
 			set
 			{
 				this._Posts.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Posts1", Storage="_Posts1", ThisKey="UserId", OtherKey="SenderId")]
+		public EntitySet<Posts> Posts1
+		{
+			get
+			{
+				return this._Posts1;
+			}
+			set
+			{
+				this._Posts1.Assign(value);
 			}
 		}
 		
@@ -341,6 +357,18 @@ namespace MayBook
 			this.SendPropertyChanging();
 			entity.Users = null;
 		}
+		
+		private void attach_Posts1(Posts entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users1 = this;
+		}
+		
+		private void detach_Posts1(Posts entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users1 = null;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Posts")]
@@ -351,15 +379,19 @@ namespace MayBook
 		
 		private int _PostId;
 		
-		private int _UserId;
+		private int _SenderId;
+		
+		private int _ReceiverId;
 		
 		private string _Body;
 		
 		private System.DateTime _CreationDate;
 		
-		private System.DateTime _EditDate;
+		private System.Nullable<System.DateTime> _EditDate;
 		
 		private EntityRef<User> _Users;
+		
+		private EntityRef<User> _Users1;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -367,23 +399,26 @@ namespace MayBook
     partial void OnCreated();
     partial void OnPostIdChanging(int value);
     partial void OnPostIdChanged();
-    partial void OnUserIdChanging(int value);
-    partial void OnUserIdChanged();
+    partial void OnSenderIdChanging(int value);
+    partial void OnSenderIdChanged();
+    partial void OnReceiverIdChanging(int value);
+    partial void OnReceiverIdChanged();
     partial void OnBodyChanging(string value);
     partial void OnBodyChanged();
     partial void OnCreationDateChanging(System.DateTime value);
     partial void OnCreationDateChanged();
-    partial void OnEditDateChanging(System.DateTime value);
+    partial void OnEditDateChanging(System.Nullable<System.DateTime> value);
     partial void OnEditDateChanged();
     #endregion
 		
 		public Posts()
 		{
 			this._Users = default(EntityRef<User>);
+			this._Users1 = default(EntityRef<User>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PostId", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PostId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int PostId
 		{
 			get
@@ -403,26 +438,50 @@ namespace MayBook
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="Int NOT NULL")]
-		public int UserId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SenderId", DbType="Int NOT NULL")]
+		public int SenderId
 		{
 			get
 			{
-				return this._UserId;
+				return this._SenderId;
 			}
 			set
 			{
-				if ((this._UserId != value))
+				if ((this._SenderId != value))
+				{
+					if (this._Users1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnSenderIdChanging(value);
+					this.SendPropertyChanging();
+					this._SenderId = value;
+					this.SendPropertyChanged("SenderId");
+					this.OnSenderIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReceiverId", DbType="Int NOT NULL")]
+		public int ReceiverId
+		{
+			get
+			{
+				return this._ReceiverId;
+			}
+			set
+			{
+				if ((this._ReceiverId != value))
 				{
 					if (this._Users.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnUserIdChanging(value);
+					this.OnReceiverIdChanging(value);
 					this.SendPropertyChanging();
-					this._UserId = value;
-					this.SendPropertyChanged("UserId");
-					this.OnUserIdChanged();
+					this._ReceiverId = value;
+					this.SendPropertyChanged("ReceiverId");
+					this.OnReceiverIdChanged();
 				}
 			}
 		}
@@ -467,8 +526,8 @@ namespace MayBook
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditDate", DbType="Date NOT NULL")]
-		public System.DateTime EditDate
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditDate", DbType="Date")]
+		public System.Nullable<System.DateTime> EditDate
 		{
 			get
 			{
@@ -487,7 +546,7 @@ namespace MayBook
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Posts", Storage="_Users", ThisKey="UserId", OtherKey="UserId", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Posts", Storage="_Users", ThisKey="ReceiverId", OtherKey="UserId", IsForeignKey=true)]
 		public User Users
 		{
 			get
@@ -510,13 +569,47 @@ namespace MayBook
 					if ((value != null))
 					{
 						value.Posts.Add(this);
-						this._UserId = value.UserId;
+						this._ReceiverId = value.UserId;
 					}
 					else
 					{
-						this._UserId = default(int);
+						this._ReceiverId = default(int);
 					}
 					this.SendPropertyChanged("Users");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Posts1", Storage="_Users1", ThisKey="SenderId", OtherKey="UserId", IsForeignKey=true)]
+		public User Users1
+		{
+			get
+			{
+				return this._Users1.Entity;
+			}
+			set
+			{
+				User previousValue = this._Users1.Entity;
+				if (((previousValue != value) 
+							|| (this._Users1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Users1.Entity = null;
+						previousValue.Posts1.Remove(this);
+					}
+					this._Users1.Entity = value;
+					if ((value != null))
+					{
+						value.Posts1.Add(this);
+						this._SenderId = value.UserId;
+					}
+					else
+					{
+						this._SenderId = default(int);
+					}
+					this.SendPropertyChanged("Users1");
 				}
 			}
 		}

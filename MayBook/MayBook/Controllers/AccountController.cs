@@ -22,7 +22,6 @@ namespace MayBook.Controllers
         [HttpPost]
         public ActionResult LogOn(User user, string returnUrl)
         {
-            ViewBag.Name = "Success";
             var context = new MayBookDataContext();
             using (var md5 = MD5.Create())
             {
@@ -30,8 +29,10 @@ namespace MayBook.Controllers
             
                 if (users.Count() == 1)
                 {
-                    FormsAuthentication.SetAuthCookie(user.Login, true);
-                    return RedirectToAction("Index", "Home");
+                    FormsAuthentication.SetAuthCookie(users.First().UserId.ToString(), true);
+                    
+                    return RedirectToAction("Index", "Page", new { id = users.First().UserId });
+                    
                 }
             }
             return RedirectToAction("Index", "Home");

@@ -1,5 +1,5 @@
 ﻿@if(Request.IsAuthenticated) {
-    <text>Добро пожаловать, <strong>@User.Identity.Name</strong>!
+    <text>Добро пожаловать, <strong>@ViewBag.Name!</strong>
     [ @Html.ActionLink("Выход", "LogOff", "Account") ]</text>
 }
 else {

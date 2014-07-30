@@ -322,3 +322,24 @@ div#title {
 .tri-state {
     width: 6em;
 }
+
+
+
+
+#page div {
+    display:block;
+}
+
+#feed div {
+    margin: 10px;
+    border: 1px solid black;
+    width: 600px;
+    padding: 2px;
+}
+
+#account-info {
+    top: 100px;
+    left: 1150px;
+    position:fixed;
+    text-align:right;
+}

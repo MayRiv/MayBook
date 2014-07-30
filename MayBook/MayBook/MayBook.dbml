@@ -10,17 +10,20 @@
       <Column Name="Avatar" Type="System.Data.Linq.Binary" DbType="Binary(800)" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="AvatarSize" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="PostsNumber" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Users_Posts" Member="Posts" ThisKey="UserId" OtherKey="UserId" Type="Posts" />
+      <Association Name="Users_Posts" Member="Posts" ThisKey="UserId" OtherKey="ReceiverId" Type="Posts" />
+      <Association Name="Users_Posts1" Member="Posts1" ThisKey="UserId" OtherKey="SenderId" Type="Posts" />
     </Type>
   </Table>
   <Table Name="dbo.Posts" Member="Posts">
     <Type Name="Posts">
-      <Column Name="PostId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PostId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SenderId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ReceiverId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Body" Type="System.String" DbType="NChar(142) NOT NULL" CanBeNull="false" />
       <Column Name="CreationDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="EditDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Association Name="Users_Posts" Member="Users" ThisKey="UserId" OtherKey="UserId" Type="Users" IsForeignKey="true" />
+      <Column Name="EditDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="Users_Posts" Member="Users" ThisKey="ReceiverId" OtherKey="UserId" Type="Users" IsForeignKey="true" />
+      <Association Name="Users_Posts1" Member="Users1" ThisKey="SenderId" OtherKey="UserId" Type="Users" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
