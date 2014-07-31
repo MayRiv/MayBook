@@ -17,10 +17,10 @@
             @post.CreationDate.ToLongTimeString()
             @if(User.Identity.Name == post.SenderId.ToString())
             {
-                <input type="button" value="Change" />
-                <input type="button" value="Delete" />
+                <input type="button" value="Change" onclick="MayBook.Change(@post.PostId)"/>
+                <input type="button" value="Delete" onclick="MayBook.Delete(@post.PostId)"/>
             }
-            <p>@post.Body</p>
+            <p id="message-@post.PostId.ToString()" )>@post.Body</p>
             </div>   
         }
     <div id="page-div">
