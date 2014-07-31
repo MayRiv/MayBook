@@ -11,11 +11,16 @@ namespace MayBook.Controllers
         //
         // GET: /Page/
 
-        public ActionResult Index(int id)
+        public ActionResult Index(int id, int postsPage=1)
         {
             //var context = new MayBookDataContext();
             //var user = context.Users.Where(u => u.UserId == id).First();
-            Models.Profile profile = new Models.Profile(id);
+        //    return View(repository.Products
+        //.OrderBy(p => p.ProductID)
+        //.Skip((page - 1) * PageSize)
+        //.Take(PageSize));
+
+            Models.Profile profile = new Models.Profile(id,postsPage);
             ViewBag.Name = profile.User.Name;
             return View(profile);
         }
