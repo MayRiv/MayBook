@@ -333,13 +333,16 @@ div#title {
 #feed div {
     margin: 10px;
     border: 1px solid black;
-    width: 600px;
+    width: 400px;
     padding: 2px;
 }
 
 #account-info {
     top: 100px;
-    left: 1150px;
+    /*
+        left: 1150px;
+    */
+    left: 600px;
     position:fixed;
     text-align:right;
 }

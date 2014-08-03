@@ -2,29 +2,29 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="MayBook">
   <DataContextMoniker Name="/MayBookDataContext" />
   <nestedChildShapes>
-    <classShape Id="aed78fde-fd33-42e0-a2a4-3adb43dd1f53" absoluteBounds="4.875, 0.875, 2, 2.3478011067708335">
-      <DataClassMoniker Name="/MayBookDataContext/Users" />
-      <nestedChildShapes>
-        <elementListCompartment Id="45021445-e5eb-46be-8e65-9d3129badf1a" absoluteBounds="4.8900000000000006, 1.335, 1.9700000000000002, 1.7878011067708333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="2a4ad654-4fdf-4aa9-a049-537e6083a765" absoluteBounds="1, 1.625, 2, 1.9631982421875">
       <DataClassMoniker Name="/MayBookDataContext/Posts" />
       <nestedChildShapes>
         <elementListCompartment Id="bf2abe0e-3b62-4e7b-b371-6121098cea21" absoluteBounds="1.0150000000000001, 2.085, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(4.875 : 2.42390055338542); (3 : 2.42390055338542)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <classShape Id="ba249d4d-0d92-4c00-8565-2928eb76b720" absoluteBounds="3.875, 1.375, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/MayBookDataContext/Users" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5d24fb01-1afb-48a6-af06-c851d0d37aab" absoluteBounds="3.8899999999999997, 1.835, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(3.875 : 2.57774983723958); (3 : 2.57774983723958)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/MayBookDataContext/Users/Users_Posts" />
       <nodes>
-        <classShapeMoniker Id="aed78fde-fd33-42e0-a2a4-3adb43dd1f53" />
+        <classShapeMoniker Id="ba249d4d-0d92-4c00-8565-2928eb76b720" />
         <classShapeMoniker Id="2a4ad654-4fdf-4aa9-a049-537e6083a765" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(4.875 : 1.96195027669271); (3 : 1.96195027669271)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.875 : 2.03887491861979); (3 : 2.03887491861979)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/MayBookDataContext/Users/Users_Posts1" />
       <nodes>
-        <classShapeMoniker Id="aed78fde-fd33-42e0-a2a4-3adb43dd1f53" />
+        <classShapeMoniker Id="ba249d4d-0d92-4c00-8565-2928eb76b720" />
         <classShapeMoniker Id="2a4ad654-4fdf-4aa9-a049-537e6083a765" />
       </nodes>
     </associationConnector>

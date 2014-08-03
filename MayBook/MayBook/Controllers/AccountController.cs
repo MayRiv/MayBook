@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using System.Security.Cryptography;
 using System.Text;
+using System.IO;
 namespace MayBook.Controllers
 {
     public class AccountController : Controller
@@ -65,7 +66,49 @@ namespace MayBook.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public ActionResult EditAccount()
+        {
+            var context = new MayBookDataContext();            
+            var user = context.Users.Where(u => u.UserId == int.Parse(User.Identity.Name)).First();        
+            ViewBag.Name = user.Name;
+            return View();
+        }
 
+        [HttpPost]
+        public ActionResult EditAccount(IEnumerable<HttpPostedFileBase> uploadedFile, string username, string oldPass, string newPass, string postsCount)
+        {
+            var context = new MayBookDataContext();
+            var user = context.Users.Where(u => u.UserId == int.Parse(User.Identity.Name)).First();
+            
+            if (newPass.Length > 0 && oldPass.Length > 0)
+            {
+                using (var md5 = MD5.Create())
+                {
+                    var pass = GetMd5Hash(md5, GetMd5Hash(md5, oldPass) + "MayBook");
+                    if (pass == user.Password)
+                        user.Password = GetMd5Hash(md5, GetMd5Hash(md5, newPass) + "MayBook");
+                }
+            }
+            if (username.Length > 0) user.Name = username;
+            if (postsCount.Length > 0)
+            {
+                int postsPerPage = 4;
+                if (int.TryParse(postsCount, out postsPerPage))
+                    user.PostsNumber = postsPerPage;
+            }
+            var file = uploadedFile.First();
+            if (file != null)
+            {
+                var dir = Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Content", "Avatars", User.Identity.Name));
+                var path = Path.Combine("Content", "Avatars", User.Identity.Name,file.FileName);
+                user.Avatar = path;
+                file.SaveAs(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,path));
+            }
+
+
+            context.SubmitChanges();
+            return RedirectToAction("Index", "Home");
+        }
         static string GetMd5Hash(MD5 md5Hash, string input)
         {
 

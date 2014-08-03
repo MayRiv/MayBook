@@ -30,12 +30,12 @@ namespace MayBook
 		
     #region Определения метода расширяемости
     partial void OnCreated();
-    partial void InsertUsers(User instance);
-    partial void UpdateUsers(User instance);
-    partial void DeleteUsers(User instance);
     partial void InsertPosts(Posts instance);
     partial void UpdatePosts(Posts instance);
     partial void DeletePosts(Posts instance);
+    partial void InsertUsers(User instance);
+    partial void UpdateUsers(User instance);
+    partial void DeleteUsers(User instance);
     #endregion
 		
 		public MayBookDataContext() : 
@@ -68,14 +68,6 @@ namespace MayBook
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<User> Users
-		{
-			get
-			{
-				return this.GetTable<User>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Posts> Posts
 		{
 			get
@@ -83,291 +75,13 @@ namespace MayBook
 				return this.GetTable<Posts>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Users")]
-	public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _UserId;
-		
-		private string _Login;
-		
-		private string _Password;
-		
-		private string _Name;
-		
-		private System.DateTime _RegisterDate;
-		
-		private System.Data.Linq.Binary _Avatar;
-		
-		private System.Nullable<int> _AvatarSize;
-		
-		private int _PostsNumber;
-		
-		private EntitySet<Posts> _Posts;
-		
-		private EntitySet<Posts> _Posts1;
-		
-    #region Определения метода расширяемости
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnUserIdChanging(int value);
-    partial void OnUserIdChanged();
-    partial void OnLoginChanging(string value);
-    partial void OnLoginChanged();
-    partial void OnPasswordChanging(string value);
-    partial void OnPasswordChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnRegisterDateChanging(System.DateTime value);
-    partial void OnRegisterDateChanged();
-    partial void OnAvatarChanging(System.Data.Linq.Binary value);
-    partial void OnAvatarChanged();
-    partial void OnAvatarSizeChanging(System.Nullable<int> value);
-    partial void OnAvatarSizeChanged();
-    partial void OnPostsNumberChanging(int value);
-    partial void OnPostsNumberChanged();
-    #endregion
-		
-		public User()
-		{
-			this._Posts = new EntitySet<Posts>(new Action<Posts>(this.attach_Posts), new Action<Posts>(this.detach_Posts));
-			this._Posts1 = new EntitySet<Posts>(new Action<Posts>(this.attach_Posts1), new Action<Posts>(this.detach_Posts1));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int UserId
+		public System.Data.Linq.Table<User> Users
 		{
 			get
 			{
-				return this._UserId;
+				return this.GetTable<User>();
 			}
-			set
-			{
-				if ((this._UserId != value))
-				{
-					this.OnUserIdChanging(value);
-					this.SendPropertyChanging();
-					this._UserId = value;
-					this.SendPropertyChanged("UserId");
-					this.OnUserIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Login", DbType="NChar(50) NOT NULL", CanBeNull=false)]
-		public string Login
-		{
-			get
-			{
-				return this._Login;
-			}
-			set
-			{
-				if ((this._Login != value))
-				{
-					this.OnLoginChanging(value);
-					this.SendPropertyChanging();
-					this._Login = value;
-					this.SendPropertyChanged("Login");
-					this.OnLoginChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Password", DbType="NChar(32) NOT NULL", CanBeNull=false)]
-		public string Password
-		{
-			get
-			{
-				return this._Password;
-			}
-			set
-			{
-				if ((this._Password != value))
-				{
-					this.OnPasswordChanging(value);
-					this.SendPropertyChanging();
-					this._Password = value;
-					this.SendPropertyChanged("Password");
-					this.OnPasswordChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NChar(50)")]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RegisterDate", DbType="Date NOT NULL")]
-		public System.DateTime RegisterDate
-		{
-			get
-			{
-				return this._RegisterDate;
-			}
-			set
-			{
-				if ((this._RegisterDate != value))
-				{
-					this.OnRegisterDateChanging(value);
-					this.SendPropertyChanging();
-					this._RegisterDate = value;
-					this.SendPropertyChanged("RegisterDate");
-					this.OnRegisterDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Avatar", DbType="Binary(800)", UpdateCheck=UpdateCheck.Never)]
-		public System.Data.Linq.Binary Avatar
-		{
-			get
-			{
-				return this._Avatar;
-			}
-			set
-			{
-				if ((this._Avatar != value))
-				{
-					this.OnAvatarChanging(value);
-					this.SendPropertyChanging();
-					this._Avatar = value;
-					this.SendPropertyChanged("Avatar");
-					this.OnAvatarChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AvatarSize", DbType="Int")]
-		public System.Nullable<int> AvatarSize
-		{
-			get
-			{
-				return this._AvatarSize;
-			}
-			set
-			{
-				if ((this._AvatarSize != value))
-				{
-					this.OnAvatarSizeChanging(value);
-					this.SendPropertyChanging();
-					this._AvatarSize = value;
-					this.SendPropertyChanged("AvatarSize");
-					this.OnAvatarSizeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PostsNumber", DbType="Int NOT NULL")]
-		public int PostsNumber
-		{
-			get
-			{
-				return this._PostsNumber;
-			}
-			set
-			{
-				if ((this._PostsNumber != value))
-				{
-					this.OnPostsNumberChanging(value);
-					this.SendPropertyChanging();
-					this._PostsNumber = value;
-					this.SendPropertyChanged("PostsNumber");
-					this.OnPostsNumberChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Posts", Storage="_Posts", ThisKey="UserId", OtherKey="ReceiverId")]
-		public EntitySet<Posts> Posts
-		{
-			get
-			{
-				return this._Posts;
-			}
-			set
-			{
-				this._Posts.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Posts1", Storage="_Posts1", ThisKey="UserId", OtherKey="SenderId")]
-		public EntitySet<Posts> Posts1
-		{
-			get
-			{
-				return this._Posts1;
-			}
-			set
-			{
-				this._Posts1.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Posts(Posts entity)
-		{
-			this.SendPropertyChanging();
-			entity.Users = this;
-		}
-		
-		private void detach_Posts(Posts entity)
-		{
-			this.SendPropertyChanging();
-			entity.Users = null;
-		}
-		
-		private void attach_Posts1(Posts entity)
-		{
-			this.SendPropertyChanging();
-			entity.Users1 = this;
-		}
-		
-		private void detach_Posts1(Posts entity)
-		{
-			this.SendPropertyChanging();
-			entity.Users1 = null;
 		}
 	}
 	
@@ -632,6 +346,268 @@ namespace MayBook
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Users")]
+	public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _UserId;
+		
+		private string _Login;
+		
+		private string _Password;
+		
+		private string _Name;
+		
+		private System.DateTime _RegisterDate;
+		
+		private string _Avatar;
+		
+		private int _PostsNumber;
+		
+		private EntitySet<Posts> _Posts;
+		
+		private EntitySet<Posts> _Posts1;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnUserIdChanging(int value);
+    partial void OnUserIdChanged();
+    partial void OnLoginChanging(string value);
+    partial void OnLoginChanged();
+    partial void OnPasswordChanging(string value);
+    partial void OnPasswordChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnRegisterDateChanging(System.DateTime value);
+    partial void OnRegisterDateChanged();
+    partial void OnAvatarChanging(string value);
+    partial void OnAvatarChanged();
+    partial void OnPostsNumberChanging(int value);
+    partial void OnPostsNumberChanged();
+    #endregion
+		
+		public User()
+		{
+			this._Posts = new EntitySet<Posts>(new Action<Posts>(this.attach_Posts), new Action<Posts>(this.detach_Posts));
+			this._Posts1 = new EntitySet<Posts>(new Action<Posts>(this.attach_Posts1), new Action<Posts>(this.detach_Posts1));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int UserId
+		{
+			get
+			{
+				return this._UserId;
+			}
+			set
+			{
+				if ((this._UserId != value))
+				{
+					this.OnUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._UserId = value;
+					this.SendPropertyChanged("UserId");
+					this.OnUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Login", DbType="NChar(50) NOT NULL", CanBeNull=false)]
+		public string Login
+		{
+			get
+			{
+				return this._Login;
+			}
+			set
+			{
+				if ((this._Login != value))
+				{
+					this.OnLoginChanging(value);
+					this.SendPropertyChanging();
+					this._Login = value;
+					this.SendPropertyChanged("Login");
+					this.OnLoginChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Password", DbType="NChar(32) NOT NULL", CanBeNull=false)]
+		public string Password
+		{
+			get
+			{
+				return this._Password;
+			}
+			set
+			{
+				if ((this._Password != value))
+				{
+					this.OnPasswordChanging(value);
+					this.SendPropertyChanging();
+					this._Password = value;
+					this.SendPropertyChanged("Password");
+					this.OnPasswordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NChar(50)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RegisterDate", DbType="Date NOT NULL")]
+		public System.DateTime RegisterDate
+		{
+			get
+			{
+				return this._RegisterDate;
+			}
+			set
+			{
+				if ((this._RegisterDate != value))
+				{
+					this.OnRegisterDateChanging(value);
+					this.SendPropertyChanging();
+					this._RegisterDate = value;
+					this.SendPropertyChanged("RegisterDate");
+					this.OnRegisterDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Avatar", DbType="NChar(100)")]
+		public string Avatar
+		{
+			get
+			{
+				return this._Avatar;
+			}
+			set
+			{
+				if ((this._Avatar != value))
+				{
+					this.OnAvatarChanging(value);
+					this.SendPropertyChanging();
+					this._Avatar = value;
+					this.SendPropertyChanged("Avatar");
+					this.OnAvatarChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PostsNumber", DbType="Int NOT NULL")]
+		public int PostsNumber
+		{
+			get
+			{
+				return this._PostsNumber;
+			}
+			set
+			{
+				if ((this._PostsNumber != value))
+				{
+					this.OnPostsNumberChanging(value);
+					this.SendPropertyChanging();
+					this._PostsNumber = value;
+					this.SendPropertyChanged("PostsNumber");
+					this.OnPostsNumberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Posts", Storage="_Posts", ThisKey="UserId", OtherKey="ReceiverId")]
+		public EntitySet<Posts> Posts
+		{
+			get
+			{
+				return this._Posts;
+			}
+			set
+			{
+				this._Posts.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Posts1", Storage="_Posts1", ThisKey="UserId", OtherKey="SenderId")]
+		public EntitySet<Posts> Posts1
+		{
+			get
+			{
+				return this._Posts1;
+			}
+			set
+			{
+				this._Posts1.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Posts(Posts entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users = this;
+		}
+		
+		private void detach_Posts(Posts entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users = null;
+		}
+		
+		private void attach_Posts1(Posts entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users1 = this;
+		}
+		
+		private void detach_Posts1(Posts entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users1 = null;
 		}
 	}
 }

@@ -41,5 +41,9 @@
     <div id="account-info">
         <h2>@Model.User.Name</h2>
         <p>@Model.User.RegisterDate.ToLongDateString()</p>
+        @if (Model.User.Avatar != null)
+        {
+            <img src="../../@Model.User.Avatar.Trim()" />
+        }
     </div>
 </div>

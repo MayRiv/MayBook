@@ -17,8 +17,12 @@
             </div>
             <div id="menucontainer">
                 <ul id="menu">
+                    <li>@Html.ActionLink("Поиск", "Index", "Search")</li>
                     <li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
-                    <li>@Html.ActionLink("О программе", "About", "Home")</li>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Изменить профиль", "EditAccount", "Account")</li>
+                    }
                 </ul>
             </div>
         </div>

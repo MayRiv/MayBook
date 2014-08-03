@@ -1,19 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="MayBook" Class="MayBookDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="WebSettings" ConnectionString="Data Source=(localdb)\v11.0;Initial Catalog=MayBook;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="MayBookConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.Users" Member="Users">
-    <Type Name="Users">
-      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Login" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Password" Type="System.String" DbType="NChar(32) NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
-      <Column Name="RegisterDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="Avatar" Type="System.Data.Linq.Binary" DbType="Binary(800)" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="AvatarSize" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="PostsNumber" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Users_Posts" Member="Posts" ThisKey="UserId" OtherKey="ReceiverId" Type="Posts" />
-      <Association Name="Users_Posts1" Member="Posts1" ThisKey="UserId" OtherKey="SenderId" Type="Posts" />
-    </Type>
-  </Table>
   <Table Name="dbo.Posts" Member="Posts">
     <Type Name="Posts">
       <Column Name="PostId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -24,6 +10,19 @@
       <Column Name="EditDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
       <Association Name="Users_Posts" Member="Users" ThisKey="ReceiverId" OtherKey="UserId" Type="Users" IsForeignKey="true" />
       <Association Name="Users_Posts1" Member="Users1" ThisKey="SenderId" OtherKey="UserId" Type="Users" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="Users">
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Login" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NChar(32) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Column Name="RegisterDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Avatar" Type="System.String" DbType="NChar(100)" CanBeNull="true" />
+      <Column Name="PostsNumber" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Users_Posts" Member="Posts" ThisKey="UserId" OtherKey="ReceiverId" Type="Posts" />
+      <Association Name="Users_Posts1" Member="Posts1" ThisKey="UserId" OtherKey="SenderId" Type="Posts" />
     </Type>
   </Table>
 </Database>
