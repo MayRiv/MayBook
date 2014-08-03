@@ -1,8 +1,22 @@
-﻿@{
-    ViewBag.Title = "Index";
+﻿@model IEnumerable<MayBook.User>
+
+@{
+    ViewBag.Title = "Результаты поиска";
 }
-@using(Html.BeginForm("Search", "Search", FormMethod.Post))
+@using(Html.BeginForm())
 {
     <input id="search" type="text" placeholder="Введите имя пользователя" name="username"/>
     <input type="submit" value="Найти" />
+}
+
+@foreach (var user in Model)
+{
+    <div>
+        <a href="/Page/Index/@user.UserId">@user.Name</a><br />
+        <p>@user.RegisterDate.ToLongDateString()</p>
+        @if (user.Avatar != null )
+        {
+            <img src="../../@user.Avatar" />
+        } 
+    </div>   
 }

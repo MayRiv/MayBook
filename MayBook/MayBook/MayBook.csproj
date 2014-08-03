@@ -96,7 +96,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Models\SearchController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PageController.cs" />
@@ -211,7 +211,6 @@
     <Content Include="Views\Page\Index.cshtml" />
     <Content Include="Views\Account\EditAccount.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
-    <Content Include="Views\Search\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

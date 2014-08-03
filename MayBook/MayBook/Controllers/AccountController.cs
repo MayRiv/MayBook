@@ -53,13 +53,14 @@ namespace MayBook.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(User user)
+        public ActionResult Register(User user, IEnumerable<HttpPostedFileBase> uploadedFile)
         {
             user.RegisterDate = DateTime.Now;
             using (var md5 = MD5.Create())
             {
                 user.Password = GetMd5Hash(md5, GetMd5Hash(md5,user.Password) + "MayBook");
             }
+            user.PostsNumber = 4;
             var context = new MayBookDataContext();
             context.Users.InsertOnSubmit(user);
             context.SubmitChanges();
