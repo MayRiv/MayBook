@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "EditAccount";
+}
+<p>Для изменения пароля нужно ввести правиьный старый пароль.</p>
+@using(Html.BeginForm("EditAccount", "Account", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploadedFile"/> <br />
+    <input type="text" name="username" placeholder="Введите новое имя" /> <br />
+    <input type="text" name="oldPass" placeholder="Введите старый пароль" /> <br />
+    <input type="text" name="newPass" placeholder="Введите новый пароль"/> <br />
+    <input type="text" name="postsCount" placeholder="Введите количество на странице"/> <br />
+    <input type="submit" name="Submit" id="SubmitSingle"  value="Сохранить"/>
+}

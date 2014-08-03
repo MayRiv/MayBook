@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+@using(Html.BeginForm("Search", "Search", FormMethod.Post))
+{
+    <input id="search" type="text" placeholder="Введите имя пользователя" name="username"/>
+    <input type="submit" value="Найти" />
+}
