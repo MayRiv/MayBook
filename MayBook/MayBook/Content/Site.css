@@ -346,3 +346,20 @@ div#title {
     position:fixed;
     text-align:right;
 }
+
+
+
+#correct-post {
+    position:fixed;
+    display:none;
+    
+    padding: 40px;
+    vertical-align: central;
+    text-align: center;
+    width:400px;
+    height:400px;
+    border: 1px solid black;
+    background: white;
+    left: 400px;
+    top: 200px;
+}

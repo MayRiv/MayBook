@@ -23,20 +23,22 @@ namespace MayBook.Controllers
         [HttpPost]
         public ActionResult LogOn(User user, string returnUrl)
         {
-            var context = new MayBookDataContext();
-            using (var md5 = MD5.Create())
+            using (var context = new MayBookDataContext())
             {
-                var users = context.Users.Where(u => (u.Login.Trim() == user.Login) && (u.Password.Trim() == GetMd5Hash(md5, GetMd5Hash(md5, user.Password) + "MayBook")));
-            
-                if (users.Count() == 1)
+                using (var md5 = MD5.Create())
                 {
-                    FormsAuthentication.SetAuthCookie(users.First().UserId.ToString(), true);
-                    
-                    return RedirectToAction("Index", "Page", new { id = users.First().UserId });
-                    
+                    var users = context.Users.Where(u => (u.Login.Trim() == user.Login) && (u.Password.Trim() == GetMd5Hash(md5, GetMd5Hash(md5, user.Password) + "MayBook")));
+
+                    if (users.Count() == 1)
+                    {
+                        FormsAuthentication.SetAuthCookie(users.First().UserId.ToString(), true);
+
+                        return RedirectToAction("Index", "Page", new { id = users.First().UserId });
+
+                    }
                 }
+                return RedirectToAction("Index", "Home");
             }
-            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult LogOff()
@@ -61,54 +63,61 @@ namespace MayBook.Controllers
                 user.Password = GetMd5Hash(md5, GetMd5Hash(md5,user.Password) + "MayBook");
             }
             user.PostsNumber = 4;
-            var context = new MayBookDataContext();
-            context.Users.InsertOnSubmit(user);
-            context.SubmitChanges();
+            using (var context = new MayBookDataContext())
+            {
+                context.Users.InsertOnSubmit(user);
+                context.SubmitChanges();
+            }
             return RedirectToAction("Index", "Home");
         }
 
         public ActionResult EditAccount()
         {
-            var context = new MayBookDataContext();            
-            var user = context.Users.Where(u => u.UserId == int.Parse(User.Identity.Name)).First();        
-            ViewBag.Name = user.Name;
+            using (var context = new MayBookDataContext())
+            {
+                var user = context.Users.Where(u => u.UserId == int.Parse(User.Identity.Name)).First();
+                ViewBag.Name = user.Name;
+            }
             return View();
         }
 
         [HttpPost]
         public ActionResult EditAccount(IEnumerable<HttpPostedFileBase> uploadedFile, string username, string oldPass, string newPass, string postsCount)
         {
-            var context = new MayBookDataContext();
-            var user = context.Users.Where(u => u.UserId == int.Parse(User.Identity.Name)).First();
-            
-            if (newPass.Length > 0 && oldPass.Length > 0)
+            using (var context = new MayBookDataContext())
             {
-                using (var md5 = MD5.Create())
+                var user = context.Users.Where(u => u.UserId == int.Parse(User.Identity.Name)).First();
+
+                if (newPass.Length > 0 && oldPass.Length > 0)
                 {
-                    var pass = GetMd5Hash(md5, GetMd5Hash(md5, oldPass) + "MayBook");
-                    if (pass == user.Password)
-                        user.Password = GetMd5Hash(md5, GetMd5Hash(md5, newPass) + "MayBook");
+                    using (var md5 = MD5.Create())
+                    {
+                        var pass = GetMd5Hash(md5, GetMd5Hash(md5, oldPass) + "MayBook");
+                        if (pass == user.Password)
+                            user.Password = GetMd5Hash(md5, GetMd5Hash(md5, newPass) + "MayBook");
+                    }
                 }
-            }
-            if (username.Length > 0) user.Name = username;
-            if (postsCount.Length > 0)
-            {
-                int postsPerPage = 4;
-                if (int.TryParse(postsCount, out postsPerPage))
-                    user.PostsNumber = postsPerPage;
-            }
-            var file = uploadedFile.First();
-            if (file != null)
-            {
-                var dir = Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Content", "Avatars", User.Identity.Name));
-                var path = Path.Combine("Content", "Avatars", User.Identity.Name,file.FileName);
-                user.Avatar = path;
-                file.SaveAs(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,path));
-            }
+                if (username.Length > 0) user.Name = username;
+                if (postsCount.Length > 0)
+                {
+                    int postsPerPage = 4;
+                    if (int.TryParse(postsCount, out postsPerPage))
+                        user.PostsNumber = postsPerPage;
+                }
+                var file = uploadedFile.First();
+                if (file != null)
+                {
+                    var dir = Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Content", "Avatars", User.Identity.Name));
+                    var path = Path.Combine("Content", "Avatars", User.Identity.Name, file.FileName);
+                    user.Avatar = path;
+                    file.SaveAs(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path));
+                }
 
 
-            context.SubmitChanges();
+                context.SubmitChanges();
+            
             return RedirectToAction("Index", "Home");
+            }
         }
         static string GetMd5Hash(MD5 md5Hash, string input)
         {
