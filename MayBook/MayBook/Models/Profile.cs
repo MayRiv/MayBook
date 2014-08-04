@@ -11,11 +11,11 @@ namespace MayBook.Models
         public User User { get; private set; }
         public int Page { get; private set; }
         public int NumberOfPages { get; private set; }
+        private MayBookDataContext context;
         public Profile(int id, int page)
         {
             Page = page;
-            using (var context = new MayBookDataContext())
-            {
+            context = new MayBookDataContext();
                 User = context.Users.Where(u => u.UserId == id).First();
 
                 Posts = context.Posts.Where(p => p.ReceiverId == id).OrderByDescending(p => p.CreationDate).Skip((Page - 1) * User.PostsNumber).Take(User.PostsNumber).ToList();
@@ -23,7 +23,7 @@ namespace MayBook.Models
                 NumberOfPages = MyPostsCount / User.PostsNumber;
                 if ((MyPostsCount % User.PostsNumber) != 0)
                     NumberOfPages++;
-            }
+            
         }
     }
 }
